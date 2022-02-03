@@ -3,120 +3,51 @@ package ru.netology.manager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Movie;
 import ru.netology.repository.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@ExtendWith(MockitoExtension.class)
 class MovieManagerTest {
-    private MovieRepository repository = new MovieRepository();
-    private Movie first = new Movie();
-    private Movie second = new Movie();
-    private Movie third = new Movie();
-    private Movie four = new Movie();
-    private Movie five = new Movie();
-    private Movie six = new Movie();
-    private Movie seven = new Movie();
-    private Movie eight = new Movie();
-    private Movie nine = new Movie();
-    private Movie ten = new Movie();
-    private Movie eleven = new Movie();
-    private Movie twelve = new Movie();
-    private Movie thirteen = new Movie();
-
-    @BeforeEach
-    public void setUp() {
-        repository.save(first);
-        repository.save(second);
-        repository.save(third);
-        repository.save(four);
-        repository.save(five);
-        repository.save(six);
-        repository.save(seven);
-        repository.save(eight);
-        repository.save(nine);
-        repository.save(ten);
-        repository.save(eleven);
-        repository.save(twelve);
-    }
+    @Mock
+    private MovieRepository repository = Mockito.mock(MovieRepository.class);
+    @InjectMocks
+    private MovieManager manager = new MovieManager(repository);
+    private Movie first = new Movie(0, "url", "name", "genre", true);
+    private Movie second = new Movie(1, "url", "name", "genre", true);
+    private Movie third = new Movie(2, "url", "name", "genre", true);
 
 
     @Test
-    public void shouldSave() {
-        Movie[] actual = repository.save(thirteen);
-        Movie[] expected = new Movie[]{first, second, third, four, five, six, seven, eight, nine, ten,
-                eleven, twelve, thirteen};
-        Assertions.assertArrayEquals(expected, actual);
+    public void add() {
+
     }
 
     @Test
-    public void findAll() {
-        Movie[] actual = repository.findAll();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight, seven, six, five, four, third,
-                second, first};
-        Assertions.assertArrayEquals(expected, actual);
+    public void getAll() {
+        Movie[] returned = {first, second, third};
+        Mockito.doReturn(returned).when(repository).findAll();
+
+        Assertions.assertEquals(3, manager.shouldSumId());
+        Mockito.verify(repository).findAll();
     }
 
     @Test
     public void removeById() {
-        repository.removeById(2);
-        Movie[] actual = repository.findAll();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight, seven, six, five, four, second, first};
-        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldFindById() {
-        Movie[] actual = repository.findById(10);
-        Movie[] expected = new Movie[]{eleven};
-        Assertions.assertArrayEquals(expected, actual);
+    public void findByID() {
     }
 
     @Test
-    public void shouldFindByIdNull() {
-        Movie[] actual = repository.findById(50);
-        Movie[] expected = new Movie[]{null};
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldRemoveAll() {
-        Movie[] actual = repository.removeAll();
-        Movie[] expected = new Movie[]{null, null, null, null, null, null, null, null, null, null, null, null};
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldMovieLimit() {
-        Movie[] actual = repository.movieLimit();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight, seven, six, five, four, third};
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldMovieLimitOver() {
-        MovieRepository repository = new MovieRepository(30);
-        repository.save(first);
-        repository.save(second);
-        repository.save(third);
-        repository.save(four);
-        repository.save(five);
-        repository.save(six);
-        repository.save(seven);
-        repository.save(eight);
-        repository.save(nine);
-        repository.save(ten);
-        repository.save(eleven);
-        repository.save(twelve);
-        Movie[] actual = repository.movieLimit();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight, seven, six, five, four,
-                third, second, first};
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldGetSetMovieLimit() {
-        repository.setMovieLimit(5);
-        Assertions.assertEquals(5, repository.getMovieLimit());
+    public void removeAll() {
     }
 }
