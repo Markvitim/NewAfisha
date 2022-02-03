@@ -1,14 +1,13 @@
-package ru.netology.manager;
+package ru.netology.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Movie;
-import ru.netology.repository.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MovieManagerTest {
+class MovieRepositoryTest {
     private MovieRepository repository = new MovieRepository();
     private Movie first = new Movie();
     private Movie second = new Movie();
@@ -119,4 +118,5 @@ class MovieManagerTest {
         repository.setMovieLimit(5);
         Assertions.assertEquals(5, repository.getMovieLimit());
     }
+
 }

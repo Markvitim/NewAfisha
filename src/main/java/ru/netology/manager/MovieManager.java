@@ -1,87 +1,47 @@
 package ru.netology.manager;
 
 import ru.netology.domain.Movie;
+import ru.netology.repository.MovieRepository;
 
 public class MovieManager {
-    private Movie[] movies = new Movie[0];
-    private int movieLimit = 10;
+    private MovieRepository repository;
 
     public MovieManager() {
     }
 
-    public MovieManager(int movieLimit) {
-        this.movieLimit = movieLimit;
+    public MovieManager(MovieRepository repository) {
+        this.repository = repository;
     }
 
-    public int getMovieLimit() {
-        return movieLimit;
+    public void add(Movie movie) {
+        repository.save(movie);
     }
 
-    public void setMovieLimit(int movieLimit) {
-        this.movieLimit = movieLimit;
-    }
-
-    public Movie[] save(Movie movie) {
-        Movie[] tmp = new Movie[movies.length + 1];
-        for (int i = 0; i < movies.length; i++) {
-            tmp[i] = movies[i];
-        }
-        tmp[tmp.length - 1] = movie;
-        movies = tmp;
-        return movies;
-    }
-
-    public Movie[] findAll() {
+    public Movie[] getAll() {
+        Movie[] movies = repository.findAll();
         Movie[] result = new Movie[movies.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = movies[movies.length - i - 1];
         }
+        return movies;
+    }
+
+    public void removeById(int idRemove) {
+        repository.removeById(idRemove);
+    }
+
+    public void findByID(int idToFind) {
+        repository.findById(idToFind);
+    }
+
+    public void removeAll() {
+        repository.removeAll();
+    }
+    public int shouldSumId(){
+        int result = 0;
+        for (Movie movie: getAll()){
+            result = result + movie.getId();
+        }
         return result;
-    }
-
-    public void removeById(int idToRemove) {
-        Movie[] tmp = new Movie[movies.length - 1];
-        int copyTo = 0;
-        for (int i = 0; i < movies.length; i++) {
-            if (i != idToRemove) {
-                tmp[copyTo] = movies[i];
-                copyTo++;
-            }
-        }
-        movies = tmp;
-    }
-
-    public Movie[] findById(int idToFind) {
-        Movie[] tmp = new Movie[1];
-        for (int i = 0; i < movies.length; i++) {
-            if (i == idToFind) {
-                tmp[0] = movies[i];
-            }
-        }
-        movies = tmp;
-        return movies;
-    }
-
-    public Movie[] removeAll() {
-        Movie[] tmp = new Movie[movies.length];
-        for (int i = 0; i < movies.length; i++) {
-            tmp[i] = null;
-            movies = tmp;
-        }
-        return movies;
-    }
-
-    public Movie[] movieLimit() {
-        int newLength = movieLimit;
-        if (movieLimit > movies.length) {
-            newLength = movies.length;
-        }
-
-        Movie[] tmp = new Movie[newLength];
-        for (int i = 0; i < tmp.length; i++) {
-            tmp[i] = movies[movies.length - i - 1];
-        }
-        movies = tmp;
-        return movies;
     }
 }
