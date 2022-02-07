@@ -44,4 +44,5 @@ public class MovieManager {
         }
         return result;
     }
+    public void movieLimit(){ repository.movieLimit();}
 }

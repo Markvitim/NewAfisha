@@ -81,7 +81,6 @@ public class MovieRepository {
         for (int i = 0; i < tmp.length; i++) {
             tmp[i] = movies[movies.length - i - 1];
         }
-        movies = tmp;
-        return movies;
+        return tmp;
     }
 }

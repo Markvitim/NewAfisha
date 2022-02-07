@@ -1,7 +1,6 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,8 +9,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Movie;
 import ru.netology.repository.MovieRepository;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -49,5 +46,9 @@ class MovieManagerTest {
 
     @Test
     public void removeAll() {
+    }
+
+    @Test
+    public void movieLimit() {
     }
 }
